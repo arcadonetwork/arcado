@@ -40,14 +40,14 @@ class JoinRoomTransaction extends BaseTransaction {
         const genesis = store.account.get("16313739661670634666L");
         const player = store.account.get(this.asset.address);
         
-        const game = genesis.asset.games.find(game => game.gameId === this.asset.gameId)
+        const game = genesis.asset.games.find(game => game.roomId === this.asset.roomId)
         if (!game) {
             errors.push(
                 new TransactionError(
-                    '"asset.gameId" does not exist',
+                    '"asset.roomId" does not exist',
                     this.id,
-                    '.asset.gameId',
-                    this.asset.gameId
+                    '.asset.roomId',
+                    this.asset.roomId
                 )
             );
             return errors;
@@ -82,7 +82,7 @@ class JoinRoomTransaction extends BaseTransaction {
             ...genesis.asset
         }
 
-        const gameIndex = asset.games.findIndex(game => game.gameId === this.asset.gameId)
+        const gameIndex = asset.games.findIndex(game => game.roomId === this.asset.roomId)
         asset.games[gameIndex].participants.push(this.asset.address)
 
         const updatedGenesis = {

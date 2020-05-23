@@ -54,6 +54,9 @@ class CreateRoomTransaction extends BaseTransaction {
         }
 
         asset.games.push({
+            createdBy: this.asset.address,
+            name: this.asset.name,
+            roomId: this.asset.roomId,
             gameId: this.asset.gameId,
             entryFee: this.asset.entryFee, // string
             participants: [this.asset.address],
