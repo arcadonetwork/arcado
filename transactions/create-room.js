@@ -49,11 +49,12 @@ class CreateRoomTransaction extends BaseTransaction {
         const errors = [];
         const genesis = store.account.get("16313739661670634666L");
         let asset = {
-            games: [],
+            rooms: [],
             ...genesis.asset
         }
 
-        asset.games.push({
+        asset.rooms.push({
+            roomId: this.asset.roomId,
             gameId: this.asset.gameId,
             entryFee: this.asset.entryFee, // string
             participants: [this.asset.address],
@@ -79,7 +80,7 @@ class CreateRoomTransaction extends BaseTransaction {
         }
 
         store.account.set(player.address, updatedPlayer);
-        
+
         return errors;
     }
 
@@ -87,18 +88,18 @@ class CreateRoomTransaction extends BaseTransaction {
         // Add entryfee back to user balance
         const errors = [];
         const genesis = store.account.get("16313739661670634666L");
-        
-        const gameIndex = genesis.asset.games.findIndex(game => game.gameId === this.asset.gameId)
-        
+
+        const roomIndex = genesis.asset.rooms.findIndex(room => room.roomId === this.asset.roomId)
+
         let asset = {
             ...genesis.asset
         }
-        asset.games.splice(gameIndex, 1)
+        asset.rooms.splice(roomIndex, 1)
         const updatedGenesis = {
             ...genesis,
             asset
         };
-        store.account.set(genesis.address, updatedGenesis); 
+        store.account.set(genesis.address, updatedGenesis);
 
         return errors;
     }
