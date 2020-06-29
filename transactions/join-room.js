@@ -108,7 +108,6 @@ class JoinRoomTransaction extends BaseTransaction {
         // Add entryfee back to user balance
         const errors = [];
 
-
         return errors;
     }
 

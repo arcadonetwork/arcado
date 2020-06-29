@@ -54,12 +54,15 @@ class CreateRoomTransaction extends BaseTransaction {
         }
 
         asset.rooms.push({
+            createdBy: this.asset.address,
+            name: this.asset.name,
             roomId: this.asset.roomId,
             gameId: this.asset.gameId,
             entryFee: this.asset.entryFee, // string
             participants: [this.asset.address],
             distribution: this.asset.distribution,
-            maxPlayers: this.asset.maxPlayers
+            maxPlayers: this.asset.maxPlayers,
+            status: 0 // 0 open to join, 1 started, 2 ended
         })
 
         const updatedGenesis = {
