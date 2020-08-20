@@ -14,6 +14,8 @@
   "author": "Michiel Mulders, Tom Ploem",
   "license": "ISC",
   "dependencies": {
-    "lisk-sdk": "3.0.1"
+    "lisk-sdk": "3.0.1",
+    "dotenv": "8.2.0",
+    "@moosty/lisk-extended-api": "0.0.8"
   }
 }
