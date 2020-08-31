@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+const dotenv = require('dotenv');
 dotenv.config();
 
 const { Application, genesisBlockDevnet, configDevnet } = require('lisk-sdk');
@@ -21,7 +21,7 @@ app.registerTransaction(StopRoomTransaction);
 app.registerModule(ExtendedHTTPApiModule, {
   port: 2020,
   limit: 1000,
-  assets: ['gameId', 'roomId', 'recipientId']
+  assets: ['gameId', 'roomId', 'recipientId', 'type']
 });
 
 app

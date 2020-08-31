@@ -11,7 +11,7 @@
     "Node.js",
     "blockchain"
   ],
-  "author": "Michiel Mulders, Tom Ploem",
+  "author": "Arcado Network",
   "license": "ISC",
   "dependencies": {
     "lisk-sdk": "3.0.1",
