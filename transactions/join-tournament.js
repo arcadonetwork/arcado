@@ -1,16 +1,13 @@
-const {
-    BaseTransaction,
-    TransactionError,
-    utils
-} = require('@liskhq/lisk-transactions');
+const { BaseTransaction, TransactionError, utils } = require('@liskhq/lisk-transactions');
+
 
 /**
- * Join active room
- * 1. Check if room exists and if maxPlayers has been reached
+ * Join active tournament
+ * 1. Check if tournament exists and if maxPlayers has been reached
  * 2. Check balance of user to pay entryFee
  * 3. Add user to game object in asset of genesis account
  */
-class JoinRoomTransaction extends BaseTransaction {
+class JoinTournamentTransaction extends BaseTransaction {
 
     static get TYPE () {
         return 31;
@@ -40,33 +37,33 @@ class JoinRoomTransaction extends BaseTransaction {
         const genesis = store.account.get("11237980039345381032L");
         const player = store.account.get(this.asset.address);
 
-        const room = genesis.asset.rooms.find(room => room.roomId === this.asset.roomId)
-        if (!room) {
+        const tournament = genesis.asset.tournaments.find(tournament => tournament.tournamentId === this.asset.tournamentId)
+        if (!tournament) {
             errors.push(
                 new TransactionError(
-                    '"asset.roomId" does not exist',
+                    '"asset.tournamentId" does not exist',
                     this.id,
-                    '.asset.roomId',
-                    this.asset.roomId
+                    '.asset.tournamentId',
+                    this.asset.tournamentId
                 )
             );
             return errors;
         }
 
-        if (room.participants.length >= room.maxPlayers) {
+        if (tournament.participants.length >= tournament.maxPlayers) {
             errors.push(
                 new TransactionError(
-                    'Room is already full',
+                    'Tournament is already full',
                     this.id,
                     '.asset.maxPlayers',
-                    room.maxPlayers
+                    tournament.maxPlayers
                 )
             );
             return errors;
         }
 
         const playerBalance = new utils.BigNum(player.balance);
-        if (playerBalance.lt(room.entryFee)) {
+        if (playerBalance.lt(tournament.entryFee)) {
             errors.push(
                 new TransactionError(
                     'Insufficient balance for player',
@@ -82,8 +79,8 @@ class JoinRoomTransaction extends BaseTransaction {
             ...genesis.asset
         }
 
-        const roomIndex = asset.rooms.findIndex(room => room.roomId === this.asset.roomId)
-        asset.rooms[roomIndex].participants.push(this.asset.address)
+        const tournamentIndex = asset.tournaments.findIndex(tournament => tournament.tournamentId === this.asset.tournamentId)
+        asset.tournaments[tournamentIndex].participants.push(this.asset.address)
 
         const updatedGenesis = {
             ...genesis,
@@ -92,7 +89,7 @@ class JoinRoomTransaction extends BaseTransaction {
         store.account.set(genesis.address, updatedGenesis);
 
         // Substract fee from user
-        const entryFeeBalance = new utils.BigNum(room.entryFee)
+        const entryFeeBalance = new utils.BigNum(tournament.entryFee)
         const updatedPlayerBalance = playerBalance.sub(entryFeeBalance);
         const updatedPlayer = {
             ...player,
@@ -113,4 +110,4 @@ class JoinRoomTransaction extends BaseTransaction {
 
 }
 
-module.exports = JoinRoomTransaction;
+module.exports = JoinTournamentTransaction

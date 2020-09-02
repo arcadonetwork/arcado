@@ -1,12 +1,10 @@
-const {
-    BaseTransaction,
-    TransactionError
-} = require('@liskhq/lisk-transactions');
+const { BaseTransaction, TransactionError, utils } = require('@liskhq/lisk-transactions');
+
 
 /**
- * Start the created room
+ * Start the created tournament
  */
-class StartRoomTransaction extends BaseTransaction {
+class StartTournamentTransaction extends BaseTransaction {
 
     static get TYPE () {
         return 32;
@@ -35,16 +33,16 @@ class StartRoomTransaction extends BaseTransaction {
         const errors = [];
         const genesis = store.account.get("11237980039345381032L");
 
-        // Check if sender is the owner of the room otherwise reject
-        const room = genesis.asset.rooms.find(room => room.roomId === this.asset.roomId)
-        if (room.createdBy !== this.asset.address) {
+        // Check if sender is the owner of the tournament otherwise reject
+        const tournament = genesis.asset.tournaments.find(tournament => tournament.tournamentId === this.asset.tournamentId)
+        if (tournament.createdBy !== this.asset.address) {
             errors.push(
                 new TransactionError(
-                    '"asset.address" does not match createdBy field for room - you are not the owner of the room',
+                    '"asset.address" does not match createdBy field for tournament - you are not the owner of the tournament',
                     this.id,
                     '.asset.address',
                     this.asset.address,
-                    room.createdBy
+                    tournament.createdBy
                 )
             );
             return errors;
@@ -54,14 +52,15 @@ class StartRoomTransaction extends BaseTransaction {
             ...genesis.asset
         }
 
-        const roomIndex = asset.rooms.findIndex(room => room.roomId === this.asset.roomId)
-        asset.rooms[roomIndex].status = 1 // started
+        const tournamentIndex = asset.tournaments.findIndex(tournament => tournament.tournamentId === this.asset.tournamentId)
+        asset.tournaments[tournamentIndex].status = 1 // started
 
         const updatedGenesis = {
             ...genesis,
             asset
         };
         store.account.set(genesis.address, updatedGenesis);
+
         return errors;
     }
 
@@ -70,12 +69,12 @@ class StartRoomTransaction extends BaseTransaction {
         const errors = [];
         const genesis = store.account.get("11237980039345381032L");
 
-        const roomIndex = genesis.asset.rooms.findIndex(room => room.roomId === this.asset.roomId)
+        const tournamentIndex = genesis.asset.tournaments.findIndex(tournament => tournament.tournamentId === this.asset.tournamentId)
 
         let asset = {
             ...genesis.asset
         }
-        asset.rooms[roomIndex].status = 0
+        asset.tournaments[tournamentIndex].status = 0
         const updatedGenesis = {
             ...genesis,
             asset
@@ -87,4 +86,4 @@ class StartRoomTransaction extends BaseTransaction {
 
 }
 
-module.exports = StartRoomTransaction;
+module.exports = StartTournamentTransaction;

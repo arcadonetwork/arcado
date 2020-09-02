@@ -1,13 +1,9 @@
-const {
-    BaseTransaction,
-    TransactionError,
-    utils
-} = require('@liskhq/lisk-transactions');
+const { BaseTransaction, TransactionError, utils } = require('@liskhq/lisk-transactions');
 
 /**
- * Create new room with details
+ * Create new tournament with details
  */
-class CreateRoomTransaction extends BaseTransaction {
+class CreateTournamentTransaction extends BaseTransaction {
 
     static get TYPE () {
         return 30;
@@ -49,17 +45,17 @@ class CreateRoomTransaction extends BaseTransaction {
         const errors = [];
         const genesis = store.account.get("11237980039345381032L");
         let asset = {
-            rooms: [],
+            tournaments: [],
             ...genesis.asset
         }
 
-        asset.rooms.push({
+        asset.tournaments.push({
             createdBy: this.asset.address,
             name: this.asset.name,
-            roomId: this.asset.roomId,
+            tournamentId: this.asset.tournamentId,
             gameId: this.asset.gameId,
             entryFee: this.asset.entryFee, // string
-            participants: [this.asset.address],
+            participants: [],
             distribution: this.asset.distribution,
             maxPlayers: this.asset.maxPlayers,
             status: 0 // 0 open to join, 1 started, 2 ended
@@ -92,12 +88,12 @@ class CreateRoomTransaction extends BaseTransaction {
         const errors = [];
         const genesis = store.account.get("11237980039345381032L");
 
-        const roomIndex = genesis.asset.rooms.findIndex(room => room.roomId === this.asset.roomId)
+        const gameIndex = genesis.asset.tournaments.findIndex(game => game.tournamentId === this.asset.tournamentId)
 
         let asset = {
             ...genesis.asset
         }
-        asset.rooms.splice(roomIndex, 1)
+        asset.tournaments.splice(gameIndex, 1)
         const updatedGenesis = {
             ...genesis,
             asset
@@ -109,4 +105,4 @@ class CreateRoomTransaction extends BaseTransaction {
 
 }
 
-module.exports = CreateRoomTransaction;
+module.exports = CreateTournamentTransaction;
