@@ -1,8 +1,8 @@
 {
-  "name": "arcado-blockchain-lisk",
-  "version": "1.0.0",
-  "description": "Lisk blockchain application for Arcado Network",
-  "main": "index.js",
+  "name": "@arcado/arcado",
+  "version": "0.1.0",
+  "description": "Decentralized Gaming universe",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,10 +12,14 @@
     "blockchain"
   ],
   "author": "Arcado Network",
-  "license": "ISC",
+  "license": "GPL-3.0",
   "dependencies": {
     "lisk-sdk": "3.0.1",
     "dotenv": "8.2.0",
     "@moosty/lisk-extended-api": "0.0.9"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/arcadonetwork/arcado/issues"
+  },
+  "homepage": "https://github.com/arcadonetwork/arcado/issues#readme"
 }
