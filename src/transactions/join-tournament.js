@@ -1,5 +1,5 @@
 const { BaseTransaction, TransactionError, utils } = require('@liskhq/lisk-transactions');
-
+const { TRANSACTION_TYPES, NETWORK } = require('../utils/constants');
 
 /**
  * Join active tournament
@@ -10,7 +10,7 @@ const { BaseTransaction, TransactionError, utils } = require('@liskhq/lisk-trans
 class JoinTournamentTransaction extends BaseTransaction {
 
     static get TYPE () {
-        return 31;
+        return TRANSACTION_TYPES.JOIN_TOURNAMENT;
     }
 
     static get FEE () {
@@ -20,7 +20,7 @@ class JoinTournamentTransaction extends BaseTransaction {
     async prepare(store) {
         await store.account.cache([
             {
-                address: "11237980039345381032L", // genesis
+                address: NETWORK.GENESIS, // genesis
             },
             {
                 address: this.asset.address,
@@ -34,7 +34,7 @@ class JoinTournamentTransaction extends BaseTransaction {
 
     applyAsset(store) {
         const errors = [];
-        const genesis = store.account.get("11237980039345381032L");
+        const genesis = store.account.get(NETWORK.GENESIS);
         const player = store.account.get(this.asset.address);
 
         const tournament = genesis.asset.tournaments.find(tournament => tournament.tournamentId === this.asset.tournamentId)

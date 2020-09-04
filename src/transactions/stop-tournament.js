@@ -1,4 +1,5 @@
 const { BaseTransaction, TransactionError, utils } = require('@liskhq/lisk-transactions');
+const { TRANSACTION_TYPES, NETWORK } = require('../utils/constants');
 
 /**
  * Stop the created tournament and distribute the rewards based on the percentages set
@@ -6,7 +7,7 @@ const { BaseTransaction, TransactionError, utils } = require('@liskhq/lisk-trans
 class StopTournamentTransaction extends BaseTransaction {
 
     static get TYPE () {
-        return 33;
+        return TRANSACTION_TYPES.STOP_TOURNAMENT;
     }
 
     static get FEE () {
@@ -16,7 +17,7 @@ class StopTournamentTransaction extends BaseTransaction {
     async prepare(store) {
         await store.account.cache([
             {
-                address: "11237980039345381032L" // genesis
+                address: NETWORK.GENESIS // genesis
             },
             {
                 address: this.asset.first
@@ -36,7 +37,7 @@ class StopTournamentTransaction extends BaseTransaction {
 
     applyAsset(store) {
         const errors = [];
-        const genesis = store.account.get("11237980039345381032L");
+        const genesis = store.account.get(NETWORK.GENESIS);
 
         // Check if sender is the owner of the tournament otherwise reject
         const tournament = genesis.asset.tournaments.find(tournament => tournament.tournamentId === this.asset.tournamentId)
@@ -113,7 +114,7 @@ class StopTournamentTransaction extends BaseTransaction {
     /* Revert status game */
     undoAsset(store) {
         const errors = [];
-        const genesis = store.account.get("11237980039345381032L");
+        const genesis = store.account.get(NETWORK.GENESIS);
 
         const tournamentIndex = genesis.asset.tournaments.findIndex(tournament => tournament.tournamentId === this.asset.tournamentId)
 

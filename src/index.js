@@ -9,7 +9,6 @@ const StartTournamentTransaction = require('./transactions/start-tournament')
 const StopTournamentTransaction = require('./transactions/stop-tournament')
 
 configDevnet.app.label = 'arcado-network';
-configDevnet.modules.http_api.access.public = true;
 
 const { ExtendedHTTPApiModule } = require('@moosty/lisk-extended-api');
 

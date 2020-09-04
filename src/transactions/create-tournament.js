@@ -1,4 +1,5 @@
 const { BaseTransaction, TransactionError, utils } = require('@liskhq/lisk-transactions');
+const { TRANSACTION_TYPES, NETWORK } = require('../utils/constants');
 
 /**
  * Create new tournament with details
@@ -6,7 +7,7 @@ const { BaseTransaction, TransactionError, utils } = require('@liskhq/lisk-trans
 class CreateTournamentTransaction extends BaseTransaction {
 
     static get TYPE () {
-        return 30;
+        return TRANSACTION_TYPES.TOURNAMENTS;
     }
 
     static get FEE () {
@@ -16,7 +17,7 @@ class CreateTournamentTransaction extends BaseTransaction {
     async prepare(store) {
         await store.account.cache([
             {
-                address: "11237980039345381032L", // genesis
+                address: NETWORK.GENESIS, // genesis
             },
             {
                 address: this.asset.address,
@@ -43,7 +44,7 @@ class CreateTournamentTransaction extends BaseTransaction {
 
     applyAsset(store) {
         const errors = [];
-        const genesis = store.account.get("11237980039345381032L");
+        const genesis = store.account.get(NETWORK.GENESIS);
         let asset = {
             tournaments: [],
             ...genesis.asset
@@ -86,7 +87,7 @@ class CreateTournamentTransaction extends BaseTransaction {
     undoAsset(store) {
         // Add entryfee back to user balance
         const errors = [];
-        const genesis = store.account.get("11237980039345381032L");
+        const genesis = store.account.get(NETWORK.GENESIS);
 
         const gameIndex = genesis.asset.tournaments.findIndex(game => game.tournamentId === this.asset.tournamentId)
 

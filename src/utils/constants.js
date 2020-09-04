@@ -1,0 +1,16 @@
+
+export const FEES = {
+	createGame: '25'
+};
+
+export const TRANSACTION_TYPES = {
+	GAMES: 31,
+	TOURNAMENTS: 30,
+	JOIN_TOURNAMENT: 31,
+	START_TOURNAMENT: 32,
+	STOP_TOURNAMENT: 33,
+}
+
+export const NETWORK = {
+	GENESIS: '11237980039345381032L'
+}
