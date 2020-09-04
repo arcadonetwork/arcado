@@ -1,4 +1,4 @@
-![Logo](./docs/assets/banner_sdk.jpg)
+![Logo](./docs/assets/sdk_banner.jpg)
 
 # Arcado SDK
 
