@@ -14,9 +14,10 @@
   "author": "Arcado Network",
   "license": "GPL-3.0",
   "dependencies": {
-    "lisk-sdk": "3.0.1",
+    "@arcado/arcado-transactions": "0.0.3",
+    "@moosty/lisk-extended-api": "0.0.10",
     "dotenv": "8.2.0",
-    "@moosty/lisk-extended-api": "0.0.9"
+    "lisk-sdk": "^5.0.0-alpha.3"
   },
   "bugs": {
     "url": "https://github.com/arcadonetwork/arcado/issues"
