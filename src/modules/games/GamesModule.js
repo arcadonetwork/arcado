@@ -1,15 +1,19 @@
 const { BaseModule } = require("lisk-sdk");
 
-const {
-	CreateGameTransaction } = require('@arcado/arcado-transactions');
+const CreateGameAsset = require('./transactions/create-game');
+const { getAllAsJson } = require('./helpers');
 
 
 class GamesModule extends BaseModule {
-	name = "tournaments";
+	name = "games";
 	id = 1000;
 	transactionAssets = [
-		new CreateGameTransaction()
+		new CreateGameAsset()
 	]
+
+	actions = {
+		getAll: async () => getAllAsJson(this._dataAccess),
+	};
 }
 
 module.exports = GamesModule;

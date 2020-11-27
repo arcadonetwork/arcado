@@ -11,13 +11,11 @@
     "Node.js",
     "blockchain"
   ],
-  "author": "Arcado Network",
+  "author": "Arcado",
   "license": "GPL-3.0",
   "dependencies": {
-    "@arcado/arcado-transactions": "0.0.3",
-    "@moosty/lisk-extended-api": "0.0.10",
     "dotenv": "8.2.0",
-    "lisk-sdk": "^5.0.0-alpha.3"
+    "lisk-sdk": "5.0.0-alpha.4"
   },
   "bugs": {
     "url": "https://github.com/arcadonetwork/arcado/issues"

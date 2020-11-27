@@ -9,13 +9,14 @@ const {
 
 class TournamentsModule extends BaseModule {
 	name = "tournaments";
-	id = 1000;
+	id = 1001;
 	transactionAssets = [
 		new CreateTournamentTransaction(),
 		new JoinTournamentTransaction(),
 		new StartTournamentTransaction(),
 		new StopTournamentTransaction()
 	]
+
 }
 
 module.exports = TournamentsModule;
