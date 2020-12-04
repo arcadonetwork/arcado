@@ -11,8 +11,24 @@ const {
 
 
 const { APIPlugin } = require('./plugins');
+
+const { HallarHttpPlugin, HallarModule } = require('./hallar');
+
 const GamesModule = require('./modules/games/GamesModule');
-const HallarModule = require('./modules/hallar/HallarModule');
+
+
+genesisBlockDevnet.header.asset.accounts = genesisBlockDevnet.header.asset.accounts.map(
+  (a) =>
+    utils.objects.mergeDeep({}, a, {
+      hallar: {
+        github: {
+          id: 0,
+          username: ''
+        },
+        projects: []
+      },
+    }),
+);
 
 const appConfig = utils.objects.mergeDeep({}, configDevnet, {
   label: 'arcado',
@@ -23,7 +39,7 @@ const appConfig = utils.objects.mergeDeep({}, configDevnet, {
     enable: true,
     port: 4001,
     mode: 'ws',
-  },
+  }
 });
 
 const app = Application.defaultApplication(genesisBlockDevnet, appConfig);
@@ -31,6 +47,7 @@ const app = Application.defaultApplication(genesisBlockDevnet, appConfig);
 app.registerModule(HallarModule);
 app.registerModule(GamesModule);
 
+app.registerPlugin(HallarHttpPlugin);
 app.registerPlugin(HTTPAPIPlugin);
 app.registerPlugin(APIPlugin);
 

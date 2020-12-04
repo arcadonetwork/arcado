@@ -15,7 +15,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "dotenv": "8.2.0",
-    "lisk-sdk": "5.0.0-alpha.4"
+    "lisk-sdk": "5.0.0"
   },
   "bugs": {
     "url": "https://github.com/arcadonetwork/arcado/issues"

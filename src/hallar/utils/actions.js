@@ -11,14 +11,11 @@ const getAll = async (stateStore, action, schema, selector) => {
 		registeredBuffer
 	);
 
-	return decodedBuffer[selector];
+	return decodedBuffer[selector] || [];
 };
 
 const setAssets = async (stateStore, action, schema, assets) => {
-	await stateStore.chain.set(
-		action,
-		codec.encode(schema, assets)
-	);
+	await stateStore.chain.set(action, codec.encode(schema, assets));
 };
 
 module.exports = {
